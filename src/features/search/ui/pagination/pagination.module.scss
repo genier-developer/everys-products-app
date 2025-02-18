@@ -1,0 +1,33 @@
+@import "../../../../shared/styles/variables";
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+
+    &:hover {
+      background: $primary-color;
+      color: white;
+      border-color: $primary-color;
+    }
+
+    &:disabled {
+      background: $secondary-color;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}

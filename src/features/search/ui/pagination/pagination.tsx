@@ -1,5 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {setPage} from "../../model/search-slice.ts";
+import s from './pagination.module.scss'
 
 export const Pagination = () => {
   const dispatch = useAppDispatch();
@@ -12,14 +13,15 @@ export const Pagination = () => {
   };
 
   return (
-    <div>
-      <button 
+    <div className={s.pagination}>
+
+      <span>Страница {page} из {totalPages}</span>
+      <button
         onClick={handlePrevPage}
         disabled={page <= 1}
       >
         Предыдущая
       </button>
-      <span>Страница {page} из {totalPages}</span>
       <button onClick={() => dispatch(setPage(page + 1))}>Следующая</button>
     </div>
   );
