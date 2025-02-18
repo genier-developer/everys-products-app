@@ -3,6 +3,9 @@ import { StockItemModel } from '../../../../entities/product/types.ts';
 
 export const ProductList = () => {
   const { items } = useAppSelector((state) => state.search);
+  if (!items) {
+    return <div>Загрузка...</div>;
+  }
 
   return (
     <div>

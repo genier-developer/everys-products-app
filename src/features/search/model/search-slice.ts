@@ -5,6 +5,7 @@ type SearchState = {
   query: string;
   limit: number;
   page: number;
+  totalPages: number;
   totalItems: number;
   items: CollectionOutputModel['items'];
 }
@@ -13,6 +14,7 @@ const initialState: SearchState = {
   query: '',
   limit: 10,
   page: 1,
+  totalPages: 1,
   totalItems: 0,
   items: [],
 };

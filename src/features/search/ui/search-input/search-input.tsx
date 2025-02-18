@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import { useAppDispatch } from '../../../../app/hooks.ts';
 import { setQuery } from '../../model/search-slice.ts';
+import {FC} from "react";
+import {useAppDispatch} from "../../../../app/hooks.ts";
 
 export const SearchInput: FC = () => {
   const dispatch = useAppDispatch();
