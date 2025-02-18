@@ -1,8 +1,8 @@
+import {AppProvider} from "./providers.tsx";
+
 export function App() {
  return (
-   <>
-     <h1>Everes-Products-app</h1>
-   </>
+   <AppProvider />
  )
 }
 

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CollectionOutputModel } from '../../../entities/product/types';
 
-interface SearchState {
+type SearchState = {
   query: string;
   limit: number;
   page: number;
@@ -37,5 +37,5 @@ export const searchSlice = createSlice({
   },
 });
 
-export const searchActions = searchSlice.actions;
+export const { setQuery, setLimit, setPage, setProducts } = searchSlice.actions;
 export default searchSlice.reducer;
