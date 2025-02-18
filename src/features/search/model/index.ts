@@ -1,0 +1,1 @@
+export {searchSlice} from "./search-slice.ts"
