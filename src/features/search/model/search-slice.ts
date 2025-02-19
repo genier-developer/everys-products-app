@@ -1,24 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CollectionOutputModel } from '../../../entities/product/types';
+import {StockItemModel} from "../../../entities/product/types.ts";
 
-type SearchState = {
+interface SearchState {
   query: string;
-  limit: number;
+  products: StockItemModel[];
+  loading: boolean;
+  error: string | null;
+  currentPage: number;
   page: number;
+  limit: number;
   totalPages: number;
-  totalItems: number;
-  items: CollectionOutputModel['items'];
 }
 
 const initialState: SearchState = {
   query: '',
-  limit: 10,
+  products: [],
+  loading: false,
+  error: null,
+  currentPage: 1,
   page: 1,
-  totalPages: 1,
-  totalItems: 0,
-  items: [],
+  limit: 10,
+  totalPages: 1
 };
-
 export const searchSlice = createSlice({
   name: 'search',
   initialState,
@@ -26,18 +29,27 @@ export const searchSlice = createSlice({
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
-    setLimit: (state, action: PayloadAction<number>) => {
-      state.limit = action.payload;
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+      state.error = null;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    setProducts: (state, action: PayloadAction<StockItemModel[]>) => {
+      state.products = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    setTotalPages: (state, action: PayloadAction<number>) => {
+      state.totalPages = action.payload;
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-    },
-    setProducts: (state, action: PayloadAction<CollectionOutputModel>) => {
-      state.totalItems = action.payload.totalItems;
-      state.items = action.payload.items;
-    },
-  },
+    }
+  }
 });
 
-export const { setQuery, setLimit, setPage, setProducts } = searchSlice.actions;
+export const { setQuery, setLoading, setError, setProducts, setTotalPages, setPage } = searchSlice.actions;
 export default searchSlice.reducer;
