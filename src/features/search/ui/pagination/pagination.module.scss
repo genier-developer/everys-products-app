@@ -2,32 +2,37 @@
 
 .pagination {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin: 20px 0;
 
-  button {
-    padding: 10px 20px;
-    font-size: 14px;
-    border: 1px solid $border-color;
-    border-radius: 4px;
-    background: white;
-    cursor: pointer;
-
-    &:hover {
-      background: $primary-color;
-      color: white;
-      border-color: $primary-color;
-    }
-
-    &:disabled {
-      background: $secondary-color;
-      cursor: not-allowed;
-    }
+  .pageInfo {
+    text-align: center;
   }
 
-  span {
-    padding: 10px 20px;
-    font-size: 14px;
+  .buttonsContainer {
+    display: flex;
+    gap: 10px;
+    
+    button {
+      padding: 8px 16px;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: $secondary-color;
+      }
+
+      &:hover:not(:disabled) {
+        background: $primary-color;
+        color: white;
+        border-color: $primary-color;
+      }
+    }
   }
 }

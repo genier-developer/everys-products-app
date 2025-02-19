@@ -14,15 +14,22 @@ export const Pagination = () => {
 
   return (
     <div className={s.pagination}>
-
-      <span>Страница {page} из {totalPages}</span>
-      <button
-        onClick={handlePrevPage}
-        disabled={page <= 1}
-      >
-        Предыдущая
-      </button>
-      <button onClick={() => dispatch(setPage(page + 1))}>Следующая</button>
+      <div className={s.pageInfo}>
+        Страница {page} из {totalPages}
+      </div>
+      <div className={s.buttonsContainer}>
+        <button
+          onClick={handlePrevPage}
+          disabled={page <= 1}
+        >
+          Предыдущая
+        </button>
+        <button 
+          onClick={() => dispatch(setPage(page + 1))}
+        >
+          Следующая
+        </button>
+      </div>
     </div>
   );
 };
