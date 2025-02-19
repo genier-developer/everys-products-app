@@ -1,0 +1,19 @@
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: text-bottom;
+  border-radius: 50%;
+  animation: spinner 0.75s linear infinite;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-right-color: #09f;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
