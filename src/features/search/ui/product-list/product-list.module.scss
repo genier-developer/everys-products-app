@@ -22,7 +22,41 @@
 
   p {
     font-size: 14px;
-    color: $secondary-color;
+    //color: $secondary-color;
     margin-bottom: 8px;
+  }
+}
+
+.tableContainer {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid $border-color;
+  }
+
+  th {
+    background-color: $secondary-color;
+    color: $text-color;
+    font-weight: bold;
+  }
+
+  tr:hover {
+    background-color: rgba($primary-color, 0.05);
+  }
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
   }
 }

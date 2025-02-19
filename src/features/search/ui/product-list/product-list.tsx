@@ -15,16 +15,31 @@ export const ProductList: FC = () => {
   }
 
   return (
-    <div className={s.productList}>
-      {products.map((product: StockItemModel) => (
-        <div key={product.code || ''} className={s.productCard}>
-          <h3>{product.title}</h3>
-          <p>{product.description}</p>
-          <p>Manufacturer: {product.manufacturer}</p>
-          <p>Price: {product.price}</p>
-          <p>Stock: {product.stock}</p>
-        </div>
-      ))}
+    <div className={s.tableContainer}>
+      <table className={s.table}>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Title</th>
+            <th>Manufacturer</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product: StockItemModel) => (
+            <tr key={product.code || ''}>
+              <td>{product.code}</td>
+              <td>{product.title}</td>
+              <td>{product.manufacturer}</td>
+              <td>{product.description}</td>
+              <td>{product.price}</td>
+              <td>{product.stock}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
