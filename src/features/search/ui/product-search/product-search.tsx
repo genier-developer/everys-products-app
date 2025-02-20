@@ -5,7 +5,7 @@ import { searchProducts } from '../../api';
 import { SearchInput } from '../search-input';
 import { ProductList } from '../product-list';
 import { Pagination } from '../pagination';
-import { Spinner } from '../../../../shared/ui/spinner/spinner';
+import { Spinner } from '../../../../shared/ui/spinner';
 import s from './product-search.module.scss';
 
 export const ProductSearch: FC = () => {
@@ -23,7 +23,7 @@ export const ProductSearch: FC = () => {
     } finally {
       dispatch(setLoading(false));
     }
-  }, [query, page, limit, dispatch]);
+  }, [ page, limit, dispatch]);
   
   useEffect(() => {
     dispatch(setLoading(true));
@@ -32,7 +32,7 @@ export const ProductSearch: FC = () => {
 
   return (
     <div>
-      <SearchInput />
+      <SearchInput onSearch={fetchData}/>
       {loading && (
         <div className={s.spinnerContainer}>
           <Spinner />

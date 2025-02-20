@@ -3,7 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { setQuery, setLoading, setPage } from '../../model/search-slice'
 import s from './search-input.module.scss'
 
-export const SearchInput: FC = () => {
+interface SearchInputProps {
+  onSearch: () => void
+}
+export const SearchInput: FC<SearchInputProps> = ({onSearch}) => {
   const dispatch = useAppDispatch()
   const { query, loading, products } = useAppSelector((state) => state.search)
 
@@ -15,6 +18,7 @@ export const SearchInput: FC = () => {
     if (!query.trim()) return
     dispatch(setLoading(true))
     dispatch(setPage(1))
+    onSearch()
   }
 
   return (
