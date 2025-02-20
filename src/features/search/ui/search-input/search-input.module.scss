@@ -1,4 +1,4 @@
-@import "../../../../shared/styles/variables";
+@import "../../../../shared/styles/_variables";
 
 .searchContainer {
   display: flex;
@@ -13,7 +13,7 @@
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid $border-color;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
 
   &:focus {
