@@ -12,9 +12,9 @@ export const ProductSearch: FC = () => {
   const dispatch = useAppDispatch();
   const { query, page, limit, loading } = useAppSelector((state) => state.search);
 
-  const fetchData = useCallback(async () => {
+  const fetchInitialData = useCallback(async () => {
     try {
-      const data = await searchProducts(query, page, limit);
+      const data = await searchProducts('', page, limit);
       dispatch(setProducts(data.items));
       dispatch(setTotalPages(Math.ceil(data.totalItems / limit)));
     } catch (error) {
@@ -23,16 +23,29 @@ export const ProductSearch: FC = () => {
     } finally {
       dispatch(setLoading(false));
     }
-  }, [ page, limit, dispatch]);
+  }, [page, limit, dispatch]);
+
+  const handleSearch = useCallback(async () => {
+    try {
+      const data = await searchProducts(query, 1, limit);
+      dispatch(setProducts(data.items));
+      dispatch(setTotalPages(Math.ceil(data.totalItems / limit)));
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+      dispatch(setError(error instanceof Error ? error.message : 'Unknown error'));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [query, limit, dispatch]);
   
   useEffect(() => {
     dispatch(setLoading(true));
-    fetchData();
-  }, [fetchData, dispatch]);
+    fetchInitialData();
+  }, [fetchInitialData, dispatch]);
 
   return (
     <div>
-      <SearchInput onSearch={fetchData}/>
+      <SearchInput onSearch={handleSearch}/>
       {loading && (
         <div className={s.spinnerContainer}>
           <Spinner />
