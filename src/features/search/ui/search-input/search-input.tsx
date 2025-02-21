@@ -1,6 +1,6 @@
 import { ChangeEvent, FC } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { setQuery } from '../../model/search-slice';
+import {filterProducts, setQuery} from '../../model/search-slice';
 import s from './search-input.module.scss';
 
 export const SearchInput: FC = () => {
@@ -11,8 +11,9 @@ export const SearchInput: FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setQuery(e.target.value));
   };
-  const handleSearch = ()=>{
 
+  const handleSearch = async ()=>{
+    dispatch(filterProducts())
   }
 
   return (

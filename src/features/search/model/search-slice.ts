@@ -29,16 +29,10 @@ export const searchSlice = createSlice({
   reducers: {
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
-      state.products = state.allProducts.filter(product =>
-        (product.title?.toLowerCase().includes(action.payload.toLowerCase())) ||
-        (product.description?.toLowerCase().includes(action.payload.toLowerCase())) ||
-        (product.manufacturer?.toLowerCase().includes(action.payload.toLowerCase()))
-      );
-      state.totalPages = Math.ceil(state.products.length / state.limit);
     },
     setAllProducts: (state, action: PayloadAction<StockItemModel[]>) => {
       state.allProducts = action.payload;
-      state.products = action.payload; // Изначально отображаем все продукты
+      state.products = action.payload;
       state.totalPages = Math.ceil(action.payload.length / state.limit);
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -52,8 +46,16 @@ export const searchSlice = createSlice({
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
     },
+    filterProducts: (state) => {
+      state.products = state.allProducts.filter(product =>
+        product.title?.toLowerCase().includes(state.query.toLowerCase()) ||
+        product.description?.toLowerCase().includes(state.query.toLowerCase()) ||
+        product.manufacturer?.toLowerCase().includes(state.query.toLowerCase())
+      );
+      state.totalPages = Math.ceil(state.products.length / state.limit);
+    },
   },
 });
 
-export const { setQuery, setAllProducts, setLoading, setError, setPage } = searchSlice.actions;
+export const { setQuery, setAllProducts, setLoading, setError, setPage, filterProducts } = searchSlice.actions;
 export default searchSlice.reducer;
