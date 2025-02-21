@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
+const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
   }
 });
 
-axiosInstance.interceptors.response.use(
+instance.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 500) {
@@ -18,4 +18,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance; 
+export default instance;

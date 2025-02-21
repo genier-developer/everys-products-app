@@ -1,4 +1,4 @@
-import axiosInstance from '../../../shared/api/axios-instance';
+import instance from '../../../shared/api/instance.ts';
 import { CollectionOutputModel } from '../../../entities/product/types.ts';
 
 export const searchProducts = async (
@@ -6,7 +6,7 @@ export const searchProducts = async (
   page: number,
   limit: number,
 ): Promise<CollectionOutputModel> => {
-  const response = await axiosInstance.get('/v1/Stock', {
+  const response = await instance.get('/v1/Stock', {
     params: {
       searchTerm: query.trim(),
       pageNumber: page,
