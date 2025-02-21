@@ -3,10 +3,10 @@ import {StockItemModel} from "../../../entities/product/types.ts";
 
 interface SearchState {
   query: string;
+  allProducts: StockItemModel[];
   products: StockItemModel[];
   loading: boolean;
   error: string | null;
-  currentPage: number;
   page: number;
   limit: number;
   totalPages: number;
@@ -14,20 +14,34 @@ interface SearchState {
 
 const initialState: SearchState = {
   query: '',
-  products: [],
+  allProducts: [], // Изначально все продукты пусты
+  products: [], // Отфильтрованные продукты
   loading: false,
   error: null,
-  currentPage: 1,
   page: 1,
   limit: 10,
-  totalPages: 1
+  totalPages: 1,
 };
+
 export const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
+      // Фильтруем продукты на основе query
+      state.products = state.allProducts.filter(product =>
+        (product.title?.toLowerCase().includes(action.payload.toLowerCase())) ||
+        (product.description?.toLowerCase().includes(action.payload.toLowerCase())) ||
+        (product.manufacturer?.toLowerCase().includes(action.payload.toLowerCase()))
+      );
+      // Обновляем общее количество страниц
+      state.totalPages = Math.ceil(state.products.length / state.limit);
+    },
+    setAllProducts: (state, action: PayloadAction<StockItemModel[]>) => {
+      state.allProducts = action.payload;
+      state.products = action.payload; // Изначально отображаем все продукты
+      state.totalPages = Math.ceil(action.payload.length / state.limit);
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -37,19 +51,11 @@ export const searchSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    setProducts: (state, action: PayloadAction<StockItemModel[]>) => {
-      state.products = action.payload;
-      state.loading = false;
-      state.error = null;
-    },
-    setTotalPages: (state, action: PayloadAction<number>) => {
-      state.totalPages = action.payload;
-    },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-    }
-  }
+    },
+  },
 });
 
-export const { setQuery, setLoading, setError, setProducts, setTotalPages, setPage } = searchSlice.actions;
+export const { setQuery, setAllProducts, setLoading, setError, setPage } = searchSlice.actions;
 export default searchSlice.reducer;
