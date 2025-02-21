@@ -14,8 +14,8 @@ interface SearchState {
 
 const initialState: SearchState = {
   query: '',
-  allProducts: [], // Изначально все продукты пусты
-  products: [], // Отфильтрованные продукты
+  allProducts: [],
+  products: [],
   loading: false,
   error: null,
   page: 1,
@@ -29,13 +29,11 @@ export const searchSlice = createSlice({
   reducers: {
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
-      // Фильтруем продукты на основе query
       state.products = state.allProducts.filter(product =>
         (product.title?.toLowerCase().includes(action.payload.toLowerCase())) ||
         (product.description?.toLowerCase().includes(action.payload.toLowerCase())) ||
         (product.manufacturer?.toLowerCase().includes(action.payload.toLowerCase()))
       );
-      // Обновляем общее количество страниц
       state.totalPages = Math.ceil(state.products.length / state.limit);
     },
     setAllProducts: (state, action: PayloadAction<StockItemModel[]>) => {
