@@ -1,4 +1,4 @@
-import instance from '../../../shared/api/instance.ts';
+import {instance} from '../../../shared/api';
 import { CollectionOutputModel } from '../../../entities/product/types.ts';
 
 export const searchProducts = async (
