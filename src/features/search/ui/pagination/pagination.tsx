@@ -11,6 +11,11 @@ export const Pagination = () => {
       dispatch(setPage(page - 1));
     }
   };
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      dispatch(setPage(page + 1));
+    }
+  };
 
   return (
     <div className={s.pagination}>
@@ -25,7 +30,7 @@ export const Pagination = () => {
           Предыдущая
         </button>
         <button 
-          onClick={() => dispatch(setPage(page + 1))}
+          onClick={handleNextPage}
         >
           Следующая
         </button>

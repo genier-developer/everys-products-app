@@ -4,13 +4,13 @@ import { FC } from "react";
 import s from './product-list.module.scss';
 
 export const ProductList: FC = () => {
-  const { products, loading } = useAppSelector((state) => state.search);
+  const { items, loading } = useAppSelector((state) => state.search);
 
   if (loading) {
     return <div>Загрузка...</div>;
   }
 
-  if (!products || !products.length) {
+  if (!items || !items.length) {
     return <div>Товары не найдены</div>;
   }
 
@@ -28,7 +28,7 @@ export const ProductList: FC = () => {
         </tr>
         </thead>
         <tbody>
-        {products.map((product: StockItemModel) => (
+        {items.map((product: StockItemModel) => (
           <tr key={product.code || ''}>
             <td>{product.code}</td>
             <td>{product.title}</td>

@@ -3,24 +3,26 @@ import {StockItemModel} from "../../../entities/product/types.ts";
 
 interface SearchState {
   query: string;
-  allProducts: StockItemModel[];
-  products: StockItemModel[];
+  items: StockItemModel[];
+  filteredProducts: StockItemModel[];
   loading: boolean;
   error: string | null;
   page: number;
   limit: number;
   totalPages: number;
+  totalItems: number;
 }
 
 const initialState: SearchState = {
   query: '',
-  allProducts: [],
-  products: [],
+  items: [],
+  filteredProducts: [],
   loading: false,
   error: null,
   page: 1,
   limit: 10,
   totalPages: 1,
+  totalItems: 0,
 };
 
 export const searchSlice = createSlice({
@@ -31,8 +33,7 @@ export const searchSlice = createSlice({
       state.query = action.payload;
     },
     setAllProducts: (state, action: PayloadAction<StockItemModel[]>) => {
-      state.allProducts = action.payload;
-      state.products = action.payload;
+      state.items = action.payload;
       state.totalPages = Math.ceil(action.payload.length / state.limit);
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -47,12 +48,12 @@ export const searchSlice = createSlice({
       state.page = action.payload;
     },
     filterProducts: (state) => {
-      state.products = state.allProducts.filter(product =>
-        product.title?.toLowerCase().includes(state.query.toLowerCase()) ||
-        product.description?.toLowerCase().includes(state.query.toLowerCase()) ||
-        product.manufacturer?.toLowerCase().includes(state.query.toLowerCase())
+      state.items = state.items.filter(item =>
+        item.title?.toLowerCase().includes(state.query.toLowerCase()) ||
+        item.description?.toLowerCase().includes(state.query.toLowerCase()) ||
+        item.manufacturer?.toLowerCase().includes(state.query.toLowerCase())
       );
-      state.totalPages = Math.ceil(state.products.length / state.limit);
+      state.totalPages = Math.ceil(state.items.length / state.limit);
     },
   },
 });

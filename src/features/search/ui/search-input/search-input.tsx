@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent, FC, KeyboardEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import {filterProducts, setQuery} from '../../model/search-slice';
 import s from './search-input.module.scss';
@@ -6,7 +6,7 @@ import s from './search-input.module.scss';
 export const SearchInput: FC = () => {
 
   const dispatch = useAppDispatch();
-  const { query, loading, products } = useAppSelector((state) => state.search);
+  const { query, loading, totalItems} = useAppSelector((state) => state.search);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setQuery(e.target.value));
@@ -14,6 +14,12 @@ export const SearchInput: FC = () => {
 
   const handleSearch = async ()=>{
     dispatch(filterProducts())
+  }
+  
+  const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   }
 
   return (
@@ -24,11 +30,12 @@ export const SearchInput: FC = () => {
         value={query}
         onChange={handleChange}
         placeholder="Введите строку поиска..."
+        onKeyDown={handleEnter}
         disabled={loading}
       />
       <div className={s.rightSection}>
         <div className={s.foundCount}>
-          Кол-во: {products?.length || 0}
+          Кол-во: {totalItems || 0}
         </div>
         <button
           className={s.searchButton}
