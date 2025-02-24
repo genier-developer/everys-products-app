@@ -7,10 +7,10 @@ export const SearchInput: FC = () => {
 
   const dispatch = useAppDispatch();
   const { query, loading, totalItems} = useAppSelector((state) => state.search);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setQuery(e.target.value));
   };
+  
 
   const handleSearch = async ()=>{
     dispatch(filterProducts())

@@ -19,6 +19,7 @@ export const ProductList: FC = () => {
       <table className={s.table}>
         <thead>
         <tr>
+          <th>ID</th>
           <th>Code</th>
           <th>Title</th>
           <th>Manufacturer</th>
@@ -28,8 +29,9 @@ export const ProductList: FC = () => {
         </tr>
         </thead>
         <tbody>
-        {items.map((product: StockItemModel) => (
-          <tr key={product.code || ''}>
+        {items.map((product: StockItemModel, index ) => (
+          <tr key={product.code || index}>
+            <td>{index+1}</td>
             <td>{product.code}</td>
             <td>{product.title}</td>
             <td>{product.manufacturer}</td>

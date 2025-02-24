@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {StockItemModel} from "../../../entities/product/types.ts";
+import {CollectionOutputModel, StockItemModel} from "../../../entities/product/types.ts";
 
 interface SearchState {
   query: string;
@@ -7,9 +7,10 @@ interface SearchState {
   filteredProducts: StockItemModel[];
   loading: boolean;
   error: string | null;
-  page: number;
+  currentPage: number;
   limit: number;
   totalPages: number;
+
   totalItems: number;
 }
 
@@ -19,7 +20,7 @@ const initialState: SearchState = {
   filteredProducts: [],
   loading: false,
   error: null,
-  page: 1,
+  currentPage: 1,
   limit: 10,
   totalPages: 1,
   totalItems: 0,
@@ -32,10 +33,10 @@ export const searchSlice = createSlice({
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
-    setAllProducts: (state, action: PayloadAction<StockItemModel[]>) => {
-      state.items = action.payload;
-      state.totalPages = Math.ceil(action.payload.length / state.limit);
-    },
+    setAllProducts: (state, action: PayloadAction<CollectionOutputModel>) => {
+      state.items = action.payload.items;
+      state.totalItems = action.payload.totalItems;
+      state.totalPages = Math.ceil(state.totalItems / state.limit);    },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
       state.error = null;
@@ -45,7 +46,7 @@ export const searchSlice = createSlice({
       state.error = action.payload;
     },
     setPage: (state, action: PayloadAction<number>) => {
-      state.page = action.payload;
+      state.currentPage = action.payload;
     },
     filterProducts: (state) => {
       state.items = state.items.filter(item =>

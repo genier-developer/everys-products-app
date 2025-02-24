@@ -4,28 +4,30 @@ import s from './pagination.module.scss'
 
 export const Pagination = () => {
   const dispatch = useAppDispatch();
-  const { page, totalPages } = useAppSelector((state) => state.search);
-
+  const { currentPage, totalPages } = useAppSelector((state) => state.search);
+  const handlePageChange = (newPage: number) => {
+    dispatch(setPage(newPage));
+  };
   const handlePrevPage = () => {
-    if (page > 1) {
-      dispatch(setPage(page - 1));
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
     }
   };
   const handleNextPage = () => {
-    if (page < totalPages) {
-      dispatch(setPage(page + 1));
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
     }
   };
 
   return (
     <div className={s.pagination}>
       <div className={s.pageInfo}>
-        Страница {page} из {totalPages}
+        Страница {currentPage} из {totalPages}
       </div>
       <div className={s.buttonsContainer}>
         <button
           onClick={handlePrevPage}
-          disabled={page <= 1}
+          disabled={currentPage <= 1}
         >
           Предыдущая
         </button>

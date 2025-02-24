@@ -10,14 +10,14 @@ import s from './product-search.module.scss';
 
 export const ProductSearch: FC = () => {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.search);
+  const { loading, currentPage } = useAppSelector((state) => state.search);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         dispatch(setLoading(true));
-        const data = await searchProducts('', 1, 1000);
-        dispatch(setAllProducts(data.items));
+        const data = await searchProducts('', currentPage, 10);
+        dispatch(setAllProducts(data));
       } catch (error) {
         console.error('Failed to fetch products:', error);
         dispatch(setError(error instanceof Error ? error.message : 'Unknown error'));
@@ -27,7 +27,7 @@ export const ProductSearch: FC = () => {
     };
 
     fetchProducts();
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
 
   return (
     <div>
