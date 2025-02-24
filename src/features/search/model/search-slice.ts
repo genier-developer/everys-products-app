@@ -10,7 +10,6 @@ interface SearchState {
   currentPage: number;
   limit: number;
   totalPages: number;
-
   totalItems: number;
 }
 
@@ -36,7 +35,12 @@ export const searchSlice = createSlice({
     setAllProducts: (state, action: PayloadAction<CollectionOutputModel>) => {
       state.items = action.payload.items;
       state.totalItems = action.payload.totalItems;
-      state.totalPages = Math.ceil(state.totalItems / state.limit);    },
+      state.totalPages = Math.ceil(state.totalItems / state.limit);
+      if (state.currentPage > state.totalPages) {
+        state.currentPage = state.totalPages;
+      }
+      },
+
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
       state.error = null;
@@ -45,7 +49,7 @@ export const searchSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    setPage: (state, action: PayloadAction<number>) => {
+    setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
     filterProducts: (state) => {
@@ -54,10 +58,10 @@ export const searchSlice = createSlice({
         item.description?.toLowerCase().includes(state.query.toLowerCase()) ||
         item.manufacturer?.toLowerCase().includes(state.query.toLowerCase())
       );
-      state.totalPages = Math.ceil(state.items.length / state.limit);
+      state.totalPages = Math.ceil(state.totalItems / state.limit);
     },
   },
 });
 
-export const { setQuery, setAllProducts, setLoading, setError, setPage, filterProducts } = searchSlice.actions;
+export const { setQuery, setAllProducts, setLoading, setError, setCurrentPage, filterProducts } = searchSlice.actions;
 export default searchSlice.reducer;

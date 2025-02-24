@@ -1,22 +1,13 @@
-import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
-import {setPage} from "../../model/search-slice.ts";
-import s from './pagination.module.scss'
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks.ts";
+import { setCurrentPage } from "../../model/search-slice.ts";
+import s from './pagination.module.scss';
 
 export const Pagination = () => {
   const dispatch = useAppDispatch();
   const { currentPage, totalPages } = useAppSelector((state) => state.search);
+
   const handlePageChange = (newPage: number) => {
-    dispatch(setPage(newPage));
-  };
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      handlePageChange(currentPage - 1);
-    }
-  };
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      handlePageChange(currentPage + 1);
-    }
+    dispatch(setCurrentPage(newPage));
   };
 
   return (
@@ -26,13 +17,14 @@ export const Pagination = () => {
       </div>
       <div className={s.buttonsContainer}>
         <button
-          onClick={handlePrevPage}
+          onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage <= 1}
         >
           Предыдущая
         </button>
-        <button 
-          onClick={handleNextPage}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage >= totalPages}
         >
           Следующая
         </button>
